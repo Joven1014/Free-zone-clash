@@ -1,0 +1,55 @@
+{
+  "name": "freezone-internet",
+  "version": "0.2.2",
+  "author": "Freezone Internet",
+  "description": "A local proxy and device-tunnel client for macOS and Windows.",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac dmg",
+    "dist:win": "electron-builder --win --x64 --dir"
+  },
+  "devDependencies": {
+    "electron": "28.3.3",
+    "electron-builder": "24.13.3"
+  },
+  "build": {
+    "appId": "site.freezone.internet",
+    "productName": "Freezone Internet",
+    "icon": "resources/freezone.icns",
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.utilities",
+      "artifactName": "Freezone-Internet-${version}-mac-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "requestedExecutionLevel": "requireAdministrator",
+      "artifactName": "Freezone-Internet-${version}-windows-${arch}.${ext}"
+    },
+    "extraResources": [
+      {
+        "from": "resources/mihomo",
+        "to": "mihomo"
+      },
+      {
+        "from": "resources/mihomo.exe",
+        "to": "mihomo.exe"
+      },
+      {
+        "from": "resources/wintun.dll",
+        "to": "wintun.dll"
+      }
+    ]
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Freezone Internet</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside>
+        <div class="brand"><span class="brand-mark">↗</span><span>freezone</span></div>
+        <nav aria-label="Main navigation">
+          <button class="nav-item active" type="button" data-view="home"><span>⌂</span> Home</button>
+          <button class="nav-item" type="button" data-view="profiles"><span>◇</span> Profiles</button>
+          <button class="nav-item" type="button" data-view="activity"><span>▥</span> Activity</button>
+          <button class="nav-item" type="button" data-view="settings"><span>⚙</span> Settings</button>
+        </nav>
+        <div class="sidebar-note"><strong id="side-title">Connection ready</strong><span id="side-copy">Choose a profile, then connect when you are ready.</span></div>
+      </aside>
+
+      <main>
+        <div class="topbar"><button class="protection" id="protection" type="button"><span>◈</span><span id="status">Not connected</span></button></div>
+
+        <section class="view dashboard" id="home-view">
+          <div class="halo" aria-hidden="true"><svg viewBox="0 0 96 96" fill="none" stroke-width="5"><path d="M48 10 76 21v18c0 22-14 39-28 45C34 78 20 61 20 39V21L48 10Z"/><path d="M31 43c9-10 25-10 34 0M38 51c5-5 15-5 20 0" stroke-linecap="round"/><circle cx="48" cy="61" r="2" fill="currentColor" stroke="none"/></svg></div>
+          <h1 id="headline">Internet, simply connected</h1>
+          <p class="lead" id="subline">A clearer way to manage your connection.</p>
+          <button class="connect" id="start" type="button">Connect</button>
+          <button class="disconnect" id="stop" type="button" hidden>Disconnect</button>
+          <p class="connection-stage" id="detail" aria-live="polite">Choose a profile to begin.</p>
+          <label class="node-picker"><span class="sr-only">Choose connection node</span><select id="node"><option>Auto Select</option><option>Singapore · 18 ms</option><option>Tokyo · 42 ms</option><option>Frankfurt · 132 ms</option></select></label>
+          <section class="profile-choice" aria-label="Clash profile selection">
+            <div class="choice-head"><span>Choose Clash profile</span><button id="profile-trigger" type="button">+ Add profile</button></div>
+            <div class="profile-current"><span class="status-dot"></span><span id="profile-name">No profile selected</span><span class="chevron">⌄</span></div>
+            <p id="profile-meta">Add a subscription URL, paste YAML, or choose the Freezone default.</p>
+          </section>
+          <div class="stats">
+            <article class="stat"><span class="stat-icon">↗</span><div><p>Connection</p><strong id="connection">Not connected</strong></div></article>
+            <article class="stat traffic"><span class="stat-icon">⇅</span><div><p>Traffic today</p><strong id="traffic">0 B</strong><div class="usage"><span></span></div><small>of 10 GB</small></div></article>
+            <article class="stat"><span class="stat-icon">⌘</span><div><p id="routing-label">System proxy</p><strong id="proxy-status">Off</strong></div></article>
+          </div>
+        </section>
+
+        <section class="view panel-view" id="profiles-view" hidden>
+          <p class="eyebrow">Profiles</p><h1>Choose your Clash profile</h1><p>Use the community default, a subscription URL, or a YAML configuration you trust. Profiles stay on this Mac.</p>
+          <div class="action-card"><div><strong>Freezone community default</strong><span>Community-maintained Clash subscription</span></div><button id="default" class="primary" type="button">Use default</button></div>
+          <div class="action-card"><div><strong>Add your own profile</strong><span>Subscription URL, YAML text, or a local YAML file</span></div><button class="secondary open-profile" type="button">Add profile</button></div>
+        </section>
+
+        <section class="view panel-view" id="activity-view" hidden>
+          <p class="eyebrow">Activity</p><h1>Connection activity</h1><p>Recent actions on this Mac.</p><div class="activity-log" id="activity-log"><div class="empty">No activity yet.</div></div>
+        </section>
+
+        <section class="view panel-view" id="settings-view" hidden>
+          <p class="eyebrow">Settings</p><h1>Set up Freezone</h1><p>Fine-tune the local connection on this Mac.</p>
+          <div class="settings-card"><div><strong id="routing-heading">System proxy</strong><span id="routing-copy">Route compatible Wi‑Fi apps through Freezone when connected.</span></div><label class="switch"><input id="system-proxy" type="checkbox" /><span></span></label></div>
+          <div class="settings-card"><div><strong>Local connection</strong><span id="connection-copy">Freezone listens locally at 127.0.0.1:7890. If your active service is not named Wi‑Fi, configure it in macOS System Settings.</span></div></div>
+          <div class="settings-card" id="recovery-card" hidden><div><strong>Recover network</strong><span>Stop the Freezone tunnel and end any leftover Freezone connection engine after an interrupted connection.</span></div><button class="secondary" id="recover" type="button">Recover</button></div>
+        </section>
+        <p class="foot">Freezone Internet · macOS connection app</p>
+      </main>
+    </div>
+
+    <div class="modal-overlay" id="profile-modal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+        <div class="modal-head"><div><p class="eyebrow">Profiles</p><h2 id="profile-title">Add a Clash profile</h2></div><button class="close" id="close-modal" type="button" aria-label="Close">×</button></div>
+        <p class="modal-copy">Add a subscription URL, paste YAML, or import a <code>.yaml</code> file. Your profile is kept locally on this Mac.</p>
+        <div class="tabs"><button class="tab active" data-source="url" type="button">Subscription URL</button><button class="tab" data-source="yaml" type="button">Paste YAML</button><button class="tab" data-source="file" type="button">Choose file</button></div>
+        <div class="source" data-source-panel="url"><label for="url">Clash subscription URL</label><input id="url" type="url" placeholder="https://example.com/clash.yaml" /></div>
+        <div class="source" data-source-panel="yaml" hidden><label for="yaml">Clash YAML configuration</label><textarea id="yaml" placeholder="mixed-port: 7890&#10;proxies:"></textarea></div>
+        <div class="source" data-source-panel="file" hidden><div class="upload"><strong id="file-name">Choose a Clash YAML file</strong><span>.yaml or .yml · imported locally</span><button id="import" type="button">Choose file</button></div></div>
+        <p class="modal-message" id="modal-message"></p>
+        <div class="modal-actions"><button class="secondary" id="cancel-import" type="button">Cancel</button><button class="primary" id="save-profile" type="button">Add profile</button></div>
+      </section>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

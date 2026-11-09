@@ -1,0 +1,2 @@
+const { contextBridge, ipcRenderer } = require('electron');
+contextBridge.exposeInMainWorld('freezone', { setProfile: (type, value) => ipcRenderer.invoke('profile:set', type, value), start: () => ipcRenderer.invoke('core:start'), stop: () => ipcRenderer.invoke('core:stop'), recover: () => ipcRenderer.invoke('core:recover'), status: () => ipcRenderer.invoke('core:status'), setSystemProxy: enabled => ipcRenderer.invoke('proxy:set', enabled), platform: () => ipcRenderer.invoke('platform:get'), openProfileFile: () => ipcRenderer.invoke('profile:open-file') });
